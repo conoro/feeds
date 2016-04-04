@@ -101,7 +101,7 @@ func newAtomEntry(i *Item) *AtomEntry {
 			if url, err := url.Parse(i.Link.Href); err == nil {
 				host, path = url.Host, url.Path
 			}
-			id = fmt.Sprintf("tag:%s,%s:%s", host, dateStr, path)
+			id = fmt.Sprintf("tag:%s,%s:%s", host, dateStr, url.QueryEscape(path))
 		} else {
 
 			id = "urn:uuid:" + NewUUID().String()
