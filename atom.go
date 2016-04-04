@@ -2,8 +2,6 @@ package feeds
 
 import (
 	"encoding/xml"
-	"fmt"
-	"net/url"
 	"strconv"
 	"time"
 )
@@ -94,16 +92,18 @@ func newAtomEntry(i *Item) *AtomEntry {
 
 	if len(id) == 0 {
 		// if there's no id set, try to create one, either from data or just a uuid
-		if len(i.Link.Href) > 0 && (!i.Created.IsZero() || !i.Updated.IsZero()) {
-			dateStr := anyTimeFormat("2006-01-02", i.Updated, i.Created)
-			host, path := i.Link.Href, "/invalid.html"
-			if url, err := url.Parse(i.Link.Href); err == nil {
-				host, path = url.Host, url.Path
-			}
-			id = fmt.Sprintf("tag:%s,%s:%s", host, dateStr, path)
-		} else {
-			id = "urn:uuid:" + NewUUID().String()
-		}
+		/*
+			if len(i.Link.Href) > 0 && (!i.Created.IsZero() || !i.Updated.IsZero()) {
+				dateStr := anyTimeFormat("2006-01-02", i.Updated, i.Created)
+				host, path := i.Link.Href, "/invalid.html"
+				if url, err := url.Parse(i.Link.Href); err == nil {
+					host, path = url.Host, url.Path
+				}
+				id = fmt.Sprintf("tag:%s,%s:%s", host, dateStr, path)
+			} else {
+		*/
+		id = "urn:uuid:" + NewUUID().String()
+		/*	} */
 	}
 	var name, email string
 	if i.Author != nil {
